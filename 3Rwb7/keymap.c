@@ -310,6 +310,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         rgblight_sethsv(27,255,255);
       }
       return false;
+    case KC_C:
+    if (record->event.pressed && get_highest_layer(layer_state) == 3) {
+      uint8_t mods = get_mods();
+      // Check if ONLY Alt is pressed (no other modifiers)
+      if ((mods & MOD_MASK_ALT) && !(mods & ~MOD_MASK_ALT)) {
+        // Clear the Alt modifier
+        clear_mods();
+
+        // Send Ctrl+C instead
+        register_code(KC_LCTL);
+        tap_code(KC_C);
+        unregister_code(KC_LCTL);
+
+        return false; // Don't process KC_C
+      }
+    }
+    break;
+    case KC_V:
+    if (record->event.pressed && get_highest_layer(layer_state) == 3) {
+      uint8_t mods = get_mods();
+      // Check if ONLY Alt is pressed (no other modifiers)
+      if ((mods & MOD_MASK_ALT) && !(mods & ~MOD_MASK_ALT)) {
+        // Clear the Alt modifier
+        clear_mods();
+
+        // Send Ctrl+V instead
+        register_code(KC_LCTL);
+        tap_code(KC_V);
+        unregister_code(KC_LCTL);
+
+        return false; // Don't process KC_V
+      }
+    }
+    break;
   }
   return true;
 }
@@ -353,11 +387,4 @@ uint8_t layer_state_set_user(uint8_t state) {
   return state;
 };
 
-// Custom QMK here
-const key_override_t delete_key_override =
-    ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-
-const key_override_t **key_overrides = (const key_override_t *[]){
-	&delete_key_override,
-	NULL // Null terminate the array of overrides!
-};
+#include "features/overrides.c"
