@@ -318,6 +318,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Clear the Alt modifier
         clear_mods();
 
+        // Send ESC because, on Windows, pressing ALT
+        // activates the application menus
+        tap_code(KC_ESCAPE);
+
         // Send Ctrl+C instead
         register_code(KC_LCTL);
         tap_code(KC_C);
@@ -334,6 +338,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if ((mods & MOD_MASK_ALT) && !(mods & ~MOD_MASK_ALT)) {
         // Clear the Alt modifier
         clear_mods();
+
+        // Send ESC because, on Windows, pressing ALT
+        // activates the application menus
+        tap_code(KC_ESCAPE);
 
         // Send Ctrl+V instead
         register_code(KC_LCTL);
