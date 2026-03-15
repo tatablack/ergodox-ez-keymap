@@ -110,6 +110,7 @@ jobs:
           
           # Build the layout
           docker run -v ./qmk_firmware:/root --rm qmk /bin/sh -c "
+            cp /root/util/udev/50-qmk.rules /etc/udev/rules.d/
             qmk setup zsa/qmk_firmware -b firmware${{ steps.download-layout-source.outputs.firmware_version }} -y
             make ${make_prefix}${{ github.event.inputs.layout_geometry }}:${{ github.event.inputs.layout_id }}
           "
